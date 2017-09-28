@@ -1,0 +1,13 @@
+name: iot_home
+description: A little iot-core project using MQTT and my beagle bone
+version: 1.0.0
+author: Steve Hamblett <steve.hamblett@linux.com>
+homepage: https://github.com/shamblett/iot-home
+
+environment:
+  sdk: ">=1.8.0  <2.0.0"
+
+dependencies:
+  mqtt_client: ">1.0.0 <2.0.0"
+
+
