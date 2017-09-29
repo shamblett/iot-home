@@ -10,6 +10,9 @@ part of iot_home_sensors;
 /// Sensor types
 enum SensorTypes { none, dummy, temperature, light, pir }
 
+/// Sensor state
+enum SensorState { none, started, stopped }
+
 /// Sensor data packet
 class SensorData {
   SensorTypes type;
@@ -18,10 +21,13 @@ class SensorData {
 }
 
 /// Interface for all the sensors
-abstract class ISensors {
+abstract class ISensor {
 
   /// The type of the sensor
   SensorTypes type = SensorTypes.none;
+
+  /// The state the sensor is in
+  SensorState state = SensorState.none;
 
   /// The value of the sensor
   dynamic value;

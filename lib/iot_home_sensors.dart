@@ -9,6 +9,9 @@ library iot_home_sensors;
 
 import 'dart:io';
 import 'dart:async';
+import 'dart:math';
 
-part 'src/isensors.dart';
+part 'src/isensor.dart';
+
+part 'src/dummy_sensor.dart';
 
