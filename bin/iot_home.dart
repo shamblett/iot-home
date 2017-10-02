@@ -10,8 +10,6 @@ import 'dart:async';
 import 'package:iot_home/iot_home_sensors.dart';
 
 Future main(List<String> args) async {
-  final Completer completer = new Completer();
-
   print("Welcome to iot-home");
 
   /// Create our sensor and start it
@@ -19,9 +17,14 @@ Future main(List<String> args) async {
   sensor.initialise();
   sensor.start();
 
+  // Listen for any input on stdin, if any stop the sensor
+  stdin.listen((List<int> data) => sensor.stop());
+
   /// Listen for values
   await for (SensorData data in sensor.values) {
     print("Dummy sensor value is ${data.value} at time ${data.at}");
   }
-  return completer.complete(0);
+
+  print("Goodbye from iot-home");
+  exit(0);
 }
