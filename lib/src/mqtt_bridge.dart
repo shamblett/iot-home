@@ -66,7 +66,7 @@ class MqttBridge {
 
   /// Update an integer value
   void update(int value) {
-    final typed.Uint8Buffer buff = new typed.Uint8Buffer(0);
+    final typed.Uint8Buffer buff = new typed.Uint8Buffer(1);
     buff[0] = value;
     client.publishMessage(getTelemetryTopic(), mqtt.MqttQos.atMostOnce, buff);
   }

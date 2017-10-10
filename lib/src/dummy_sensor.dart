@@ -57,6 +57,7 @@ class DummySensor extends ISensor {
   /// Generate a random value at this time
   void _generateValue() {
     value = _random.nextInt(40);
+    value = value + 0x40;
     at = new DateTime.now();
   }
 }
