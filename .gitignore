@@ -12,3 +12,4 @@ pubspec.lock
 doc/api/
 /lib/src/secret/secrets.dart
 /lib/src/secret/dummy-sensor-pk.key
+/lib/src/secret/
