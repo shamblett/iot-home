@@ -23,7 +23,7 @@ class MqttBridge {
   bool logging = false;
 
   /// Token signers
-  Map<String, jwt.TokenSigner> signers;
+  Map<String, jwt.TokenSigner> signers = new Map<String, jwt.TokenSigner>();
 
   /// JWT encoder
   jwt.Encoder encoder;
@@ -41,7 +41,7 @@ class MqttBridge {
   void initialise() {
     // Initialize the token signers, in our case just RS256
     final String pkPath =
-    path.join(path.current, "secret", "dummy-sensor-pk.key");
+    path.join(path.current, "lib", "src", "secret", "dummy-sensor-pk.key");
     final File pkFile = new File(pkPath);
     final String pk = pkFile.readAsStringSync();
     signers['RS256'] = jwt.toTokenSigner(jwt.createRS256Signer(pk));
@@ -90,13 +90,15 @@ class MqttBridge {
 
   /// Get the JWT token
   Future<String> getJWT() async {
-    final jwt.Jwt token = new jwt.Jwt.RS256({
-      'iat': new DateTime.now().millisecondsSinceEpoch,
-      'exp': new DateTime.now()
-          .add(new Duration(hours: 24))
-          .millisecondsSinceEpoch,
-      'aud': Secrets.projectId
-    });
+    final int iat =
+    ((new DateTime.now().millisecondsSinceEpoch) / 1000).round();
+    final int exp = ((new DateTime.now()
+        .add(new Duration(hours: 24))
+        .millisecondsSinceEpoch) /
+        1000)
+        .round();
+    final jwt.Jwt token =
+    new jwt.Jwt.RS256({'iat': iat, 'exp': exp, 'aud': Secrets.projectId});
     final jwt.EncodedJwt enc = await encoder.convert(token);
     return enc.toString();
   }
