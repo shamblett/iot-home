@@ -17,12 +17,22 @@ Future main(List<String> args) async {
   sensor.initialise();
   sensor.start();
 
+  /// Create our MQTT bridge and initialise it
+  final MqttBridge bridge = new MqttBridge(Secrets.dummyDeviceId);
+  bridge.initialise();
+
   // Listen for any input on stdin, if any stop the sensor
   stdin.listen((List<int> data) => sensor.stop());
 
   /// Listen for values
   await for (SensorData data in sensor.values) {
     print("Dummy sensor value is ${data.value} at time ${data.at}");
+    // Dont publish unless the bridge is ready
+    if (bridge.initialised) {
+      bridge.update(data.value);
+    } else {
+      print("iot-home: not updated bridge not ready");
+    }
   }
 
   print("Goodbye from iot-home");
