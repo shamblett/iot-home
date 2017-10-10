@@ -26,4 +26,21 @@ class MqttBridge {
   void update(int value) {
 
   }
+
+  /// Get the client id for the sensor
+  String getClientId(String sensorId) {
+    return "projects/" + Secrets.projectId + "/locations/" +
+        Secrets.region + "/registries/" + Secrets.registry + "/devices/" +
+        deviceId;
+  }
+
+  /// Get the telemetry topic
+  String getTelemetryTopic(String sensorId) {
+    return "/devices/" + deviceId + "/events";
+  }
+
+  /// Get the JWT token
+  String getJWT() {
+
+  }
 }
