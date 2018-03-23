@@ -19,6 +19,7 @@ Future main(List<String> args) async {
 
   /// Create our MQTT bridge and initialise it
   final MqttBridge bridge = new MqttBridge(Secrets.dummyDeviceId);
+  bridge.logging = true;
   bridge.initialise();
 
   // Listen for any input on stdin, if any stop the sensor
