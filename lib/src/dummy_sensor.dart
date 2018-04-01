@@ -8,7 +8,8 @@
 part of iot_home_sensors;
 
 /// A dummy sensor class, this class generates a stream of integer values generated
-/// randomly between the range of 0..40. A value is generated every 10 seconds.
+/// randomly between the range of 0..40. A base of 64 is then added
+/// to make the generated value printable. A value is generated every 10 seconds.
 class DummySensor extends ISensor {
   /// Construction
   DummySensor() {

@@ -8,9 +8,9 @@ environment:
   sdk: ">=1.8.0  <2.0.0"
 
 dependencies:
-  #mqtt_client: ">1.0.0 <2.0.0"
-  mqtt_client:
-    path: C:\dev\dart\projects\mqtt_client
+  mqtt_client: ">1.0.0 <2.0.0"
+  #mqtt_client:
+    #path: C:\dev\dart\projects\mqtt_client
   just_jwt: "^1.3.1"
 
 

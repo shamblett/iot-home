@@ -22,3 +22,5 @@ part 'src/dummy_sensor.dart';
 part 'src/mqtt_bridge.dart';
 
 part 'src/secret/secrets.dart';
+
+part 'src/execute_sensor_script.dart';
