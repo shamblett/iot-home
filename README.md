@@ -1,2 +1,2 @@
 # iot-home
-A google iot-core project using MQTT for Dart
+A google iot-core example project using MQTT for Dart

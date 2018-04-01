@@ -10,12 +10,16 @@ part of iot_home_sensors;
 /// A helper class to execute an external script to get a value from
 /// a sensor on a board. The command should return a single value in
 /// stdout as a string, the value can be in integer or float format.
+/// The update is performed synchronously unless the async flag is set;
 class ExecuteSensorScript {
-  ExecuteSensorScript(this._command, this._workingDirectory, this._arguments);
+  ExecuteSensorScript(this._command, this._workingDirectory, this._arguments,
+      [this._async]);
 
-  ExecuteSensorScript.withSudo(
-      this._command, this._workingDirectory, this._arguments) {
+  ExecuteSensorScript.withSudo(this._command, this._workingDirectory,
+      this._arguments,
+      [this._async]) {
     _sudo = true;
+    _command = "sudo " + _command;
   }
 
   String _command;
@@ -24,8 +28,12 @@ class ExecuteSensorScript {
 
   String _workingDirectory;
 
+  bool _async = false;
+
   /// Only useful on nix platforms
   bool _sudo = false;
+
+  bool get sudo => _sudo;
 
   int _intValue;
 
@@ -40,8 +48,42 @@ class ExecuteSensorScript {
   DateTime get lastValueTime => _lastValueTime;
 
   /// Synchronous value update
-  void updateValueSync() {}
+  void _updateValueSync() {
+    final ProcessResult res = Process.runSync(_command, _arguments,
+        workingDirectory: _workingDirectory);
+    if (res.exitCode != 0) return;
+    _setValues(res.stdout);
+  }
+
+  /// Updates to the latest value
+  Future updateValue() async {
+    if (_async) {
+      await _updateValueAsync();
+    } else {
+      _updateValueSync();
+    }
+  }
 
   /// Asynchronous value update
-  Future updateValue() async {}
+  Future<ProcessResult> _updateValueAsync() async {
+    Completer completer;
+    Process
+        .run(_command, _arguments, workingDirectory: _workingDirectory)
+        .then((ProcessResult res) {
+      if (res.exitCode != 0) {
+        completer.complete(null);
+      } else {
+        _setValues(res.stdout);
+        completer.complete(res);
+      }
+    });
+    return completer.future;
+  }
+
+  /// Value setter
+  void _setValues(String value) {
+    _doubleValue = double.parse(value);
+    _intValue = _doubleValue.toInt();
+    _lastValueTime = new DateTime.now();
+  }
 }

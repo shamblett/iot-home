@@ -22,7 +22,6 @@ class SensorData {
 
 /// Interface for all the sensors
 abstract class ISensor {
-
   /// The type of the sensor
   SensorTypes type = SensorTypes.none;
 
