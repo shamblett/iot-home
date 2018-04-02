@@ -15,9 +15,9 @@ import 'package:just_jwt/just_jwt.dart' as jwt;
 import 'package:path/path.dart' as path;
 import 'package:typed_data/typed_data.dart' as typed;
 
-part 'src/isensor.dart';
+part 'package:iot_home/src/sensors/isensor.dart';
 
-part 'src/dummy_sensor.dart';
+part 'package:iot_home/src/sensors/dummy_sensor.dart';
 
 part 'src/mqtt_bridge.dart';
 

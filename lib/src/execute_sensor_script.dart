@@ -8,32 +8,25 @@
 part of iot_home_sensors;
 
 /// A helper class to execute an external script to get a value from
-/// a sensor on a board. The output of the script is made available in
+/// a sensor. The output of the script is made available in
 /// the output property.
-/// The update is performed synchronously unless the async flag is set;
 class ExecuteSensorScript {
-  ExecuteSensorScript(this._command, this._workingDirectory, this._arguments,
-      [this._async]);
+  ExecuteSensorScript(this.command, this.workingDirectory, this.arguments);
 
-  ExecuteSensorScript.withSudo(this._command, this._workingDirectory,
-      this._arguments,
-      [this._async]) {
-    _sudo = true;
-    _command = "sudo " + _command;
+  ExecuteSensorScript.withSudo(this.command, this.workingDirectory,
+      this.arguments) {
+    sudo = true;
+    command = "sudo " + command;
   }
 
-  String _command;
+  String command;
 
-  List<String> _arguments;
+  List<String> arguments;
 
-  String _workingDirectory;
-
-  bool _async = false;
+  String workingDirectory;
 
   /// Only useful on nix platforms
-  bool _sudo = false;
-
-  bool get sudo => _sudo;
+  bool sudo = false;
 
   /// The output of the script
   String _output;
@@ -45,27 +38,18 @@ class ExecuteSensorScript {
   DateTime get lastValueTime => _lastValueTime;
 
   /// Synchronous value update
-  void _updateValueSync() {
-    final ProcessResult res = Process.runSync(_command, _arguments,
-        workingDirectory: _workingDirectory);
+  void updateValueSync() {
+    final ProcessResult res =
+    Process.runSync(command, arguments, workingDirectory: workingDirectory);
     if (res.exitCode != 0) return;
     _setOutput(res.stdout);
   }
 
-  /// Updates to the latest value
-  Future updateValue() async {
-    if (_async) {
-      await _updateValueAsync();
-    } else {
-      _updateValueSync();
-    }
-  }
-
-  /// Asynchronous value update
-  Future<ProcessResult> _updateValueAsync() async {
-    Completer completer;
+  /// Asynchronous value update.
+  Future<ProcessResult> updateValueAsync() async {
+    Completer completer = new Completer();
     Process
-        .run(_command, _arguments, workingDirectory: _workingDirectory)
+        .run(command, arguments, workingDirectory: workingDirectory)
         .then((ProcessResult res) {
       if (res.exitCode != 0) {
         completer.complete(null);
