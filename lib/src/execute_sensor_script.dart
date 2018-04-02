@@ -8,8 +8,8 @@
 part of iot_home_sensors;
 
 /// A helper class to execute an external script to get a value from
-/// a sensor on a board. The command should return a single value in
-/// stdout as a string, the value can be in integer or float format.
+/// a sensor on a board. The output of the script is made available in
+/// the output property.
 /// The update is performed synchronously unless the async flag is set;
 class ExecuteSensorScript {
   ExecuteSensorScript(this._command, this._workingDirectory, this._arguments,
@@ -35,13 +35,10 @@ class ExecuteSensorScript {
 
   bool get sudo => _sudo;
 
-  int _intValue;
+  /// The output of the script
+  String _output;
 
-  int get valueAsInt => _intValue;
-
-  double _doubleValue;
-
-  double get valueAsDouble => _doubleValue;
+  String get output => _output;
 
   DateTime _lastValueTime;
 
@@ -52,7 +49,7 @@ class ExecuteSensorScript {
     final ProcessResult res = Process.runSync(_command, _arguments,
         workingDirectory: _workingDirectory);
     if (res.exitCode != 0) return;
-    _setValues(res.stdout);
+    _setOutput(res.stdout);
   }
 
   /// Updates to the latest value
@@ -73,17 +70,16 @@ class ExecuteSensorScript {
       if (res.exitCode != 0) {
         completer.complete(null);
       } else {
-        _setValues(res.stdout);
+        _setOutput(res.stdout);
         completer.complete(res);
       }
     });
     return completer.future;
   }
 
-  /// Value setter
-  void _setValues(String value) {
-    _doubleValue = double.parse(value);
-    _intValue = _doubleValue.toInt();
+  /// Output setter
+  void _setOutput(String value) {
+    _output = value;
     _lastValueTime = new DateTime.now();
   }
 }
