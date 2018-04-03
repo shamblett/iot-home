@@ -14,4 +14,5 @@ class Secrets {
   static const String registry = 'home-sensors';
 
   static const String dummyDeviceId = 'dummy-sensor';
+  static const String teperatureDeviceId = 'temperature-sensor';
 }

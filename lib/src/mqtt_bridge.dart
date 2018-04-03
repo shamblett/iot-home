@@ -40,8 +40,9 @@ class MqttBridge {
   /// Initialise and connect to the Mqtt bridge
   void initialise() {
     // Initialize the token signers, in our case just RS256
+    final String sensorPkFilename = deviceId + "-pk.key";
     final String pkPath =
-    path.join(path.current, "lib", "src", "secret", "dummy-sensor-pk.key");
+    path.join(path.current, "lib", "src", "secret", sensorPkFilename);
     final File pkFile = new File(pkPath);
     final String pk = pkFile.readAsStringSync();
     signers['RS256'] = jwt.toTokenSigner(jwt.createRS256Signer(pk));
