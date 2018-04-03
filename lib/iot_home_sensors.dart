@@ -19,6 +19,8 @@ part 'package:iot_home/src/sensors/isensor.dart';
 
 part 'package:iot_home/src/sensors/dummy_sensor.dart';
 
+part 'package:iot_home/src/sensors/temperature_sensor.dart';
+
 part 'src/mqtt_bridge.dart';
 
 part 'src/secret/secrets.dart';
