@@ -16,6 +16,8 @@ class Secrets {
   static const String dummyDeviceId = 'dummy-sensor';
   static const String temperatureDeviceId = 'temperature-sensor';
 
-  static const String workingDirectory = '/home/debian/Development/scripts/analogue';
-  static const String temperatureScript = 'temperature.py';
+  static const String workingDirectory =
+      '/home/debian/Development/scripts/analogue';
+  static const String temperatureScript =
+      workingDirectory + '/' + 'temperature.py';
 }
