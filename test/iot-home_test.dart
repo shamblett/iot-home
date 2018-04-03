@@ -29,8 +29,8 @@ void main() {
     });
 
     test("Execute sync", () {
-      final ExecuteSensorScript exe = new ExecuteSensorScript(
-          "echo", "test", ["hello"]);
+      final ExecuteSensorScript exe =
+      new ExecuteSensorScript("echo", "test", ["hello"]);
       expect(exe.command, "echo");
       expect(exe.arguments, ["hello"]);
       expect(exe.sudo, false);
@@ -41,14 +41,30 @@ void main() {
     });
 
     test("Execute async", () async {
-      final ExecuteSensorScript exe = new ExecuteSensorScript(
-          "echo", "test", ["hello"]);
+      final ExecuteSensorScript exe =
+      new ExecuteSensorScript("echo", "test", ["hello"]);
       expect(exe.command, "echo");
       expect(exe.arguments, ["hello"]);
       expect(exe.sudo, false);
       expect(exe.workingDirectory, "test");
       await exe.updateValueAsync();
       expect(exe.output, "hello\n");
+      expect(exe.lastValueTime, isNotNull);
+    });
+
+    test("Execute script", () {
+      final ExecuteSensorScript exe = new ExecuteSensorScript(
+          "/home/steve/Development/google/dart/projects/iot-home/test/sensorscripts/dummy-sensor.sh",
+          "/home/steve/Development/google/dart/projects/iot-home/test/sensorscripts/",
+          []);
+      expect(exe.command,
+          "/home/steve/Development/google/dart/projects/iot-home/test/sensorscripts/dummy-sensor.sh");
+      expect(exe.arguments, []);
+      expect(exe.sudo, false);
+      expect(exe.workingDirectory,
+          "/home/steve/Development/google/dart/projects/iot-home/test/sensorscripts/");
+      exe.updateValueSync();
+      expect(exe.output, "Hello from Dummy sensor\n");
       expect(exe.lastValueTime, isNotNull);
     });
   });
