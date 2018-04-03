@@ -9,13 +9,14 @@ part of iot_home_sensors;
 
 /// A dummy sensor class, this class generates a stream of integer values generated
 /// randomly between the range of 0..40. A base of 64 is then added
-/// to make the generated value printable. A value is generated every 10 seconds.
+/// to make the generated value printable. A value is generated every sampleTime seconds.
 class DummySensor extends ISensor {
   /// Construction
-  DummySensor() {
+  DummySensor([sampleTime = ISensor.defaultSampleTime]) {
     type = SensorTypes.dummy;
     value = 0;
     state = SensorState.stopped;
+    this.sampleTime = sampleTime;
     _random = new Random();
   }
 
@@ -39,7 +40,8 @@ class DummySensor extends ISensor {
   /// Start sensing
   void start() {
     /// Start the periodic timer
-    _timer = new Timer.periodic(new Duration(seconds: 10), _timerCallBack);
+    _timer =
+    new Timer.periodic(new Duration(seconds: sampleTime), _timerCallBack);
 
     /// Generate an initial value
     _generateValue();

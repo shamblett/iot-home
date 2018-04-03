@@ -22,6 +22,9 @@ class SensorData {
 
 /// Interface for all the sensors
 abstract class ISensor {
+
+  static const int defaultSampleTime = 10;
+
   /// The type of the sensor
   SensorTypes type = SensorTypes.none;
 
@@ -33,6 +36,9 @@ abstract class ISensor {
 
   /// The time the value was set(acquired)
   DateTime at;
+
+  /// Time between sensor samples in seconds.
+  int sampleTime;
 
   /// The stream of values emitted by the sensor
   final StreamController _values = new StreamController.broadcast();
