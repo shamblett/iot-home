@@ -34,9 +34,8 @@ class TemperatureSensor extends ISensor {
   /// Initialiser
   void initialise() {
     /// Create the script execution object
-    final String command = "python " + Secrets.temperatureScript;
-    _script =
-    new ExecuteSensorScript.withSudo(command, Secrets.workingDirectory, []);
+    final String command = Secrets.temperatureScript;
+    _script = new ExecuteSensorScript(command, Secrets.workingDirectory, []);
   }
 
   /// Start sensing

@@ -13,20 +13,11 @@ part of iot_home_sensors;
 class ExecuteSensorScript {
   ExecuteSensorScript(this.command, this.workingDirectory, this.arguments);
 
-  ExecuteSensorScript.withSudo(this.command, this.workingDirectory,
-      this.arguments) {
-    sudo = true;
-    command = "sudo " + command;
-  }
-
   String command;
 
   List<String> arguments;
 
   String workingDirectory;
-
-  /// Only useful on nix platforms
-  bool sudo = false;
 
   /// The output of the script
   String _output;

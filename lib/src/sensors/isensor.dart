@@ -22,7 +22,6 @@ class SensorData {
 
 /// Interface for all the sensors
 abstract class ISensor {
-
   static const int defaultSampleTime = 10;
 
   /// The type of the sensor

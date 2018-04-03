@@ -15,16 +15,6 @@ void main() {
       new ExecuteSensorScript("echo", "test", ["hello"]);
       expect(exe.command, "echo");
       expect(exe.arguments[0], "hello");
-      expect(exe.sudo, false);
-      expect(exe.workingDirectory, "test");
-    });
-
-    test("Sudo constructor", () {
-      final ExecuteSensorScript exe =
-      new ExecuteSensorScript.withSudo("echo", "test", ["hello"]);
-      expect(exe.command, "sudo echo");
-      expect(exe.arguments[0], "hello");
-      expect(exe.sudo, true);
       expect(exe.workingDirectory, "test");
     });
 
@@ -33,7 +23,6 @@ void main() {
       new ExecuteSensorScript("echo", "test", ["hello"]);
       expect(exe.command, "echo");
       expect(exe.arguments, ["hello"]);
-      expect(exe.sudo, false);
       expect(exe.workingDirectory, "test");
       exe.updateValueSync();
       expect(exe.output, "hello\n");
@@ -45,7 +34,6 @@ void main() {
       new ExecuteSensorScript("echo", "test", ["hello"]);
       expect(exe.command, "echo");
       expect(exe.arguments, ["hello"]);
-      expect(exe.sudo, false);
       expect(exe.workingDirectory, "test");
       await exe.updateValueAsync();
       expect(exe.output, "hello\n");
@@ -60,7 +48,6 @@ void main() {
       expect(exe.command,
           "/home/steve/Development/google/dart/projects/iot-home/test/sensorscripts/dummy-sensor.sh");
       expect(exe.arguments, []);
-      expect(exe.sudo, false);
       expect(exe.workingDirectory,
           "/home/steve/Development/google/dart/projects/iot-home/test/sensorscripts/");
       exe.updateValueSync();
@@ -68,4 +55,5 @@ void main() {
       expect(exe.lastValueTime, isNotNull);
     });
   });
+
 }
