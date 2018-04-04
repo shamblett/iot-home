@@ -1,7 +1,7 @@
 /*
  * Project : iot-home
  * Author : S. Hamblett <steve.hamblett@linux.com>
- * Date   : 29/09/2017
+ * Date   : 04/04/2018
  * Copyright :  S.Hamblett
  */
 
@@ -21,25 +21,25 @@ Future main(List<String> args) async {
   parser.addOption('sampleRate',
       abbr: 's', defaultsTo: ISensor.defaultSampleTime.toString(),
       callback: (sampleRateOption) {
-        sampleRate = int.parse(sampleRateOption);
-        if (sampleRate <= 0) {
-          sampleRate = ISensor.defaultSampleTime;
-        }
-      });
+    sampleRate = int.parse(sampleRateOption);
+    if (sampleRate <= 0) {
+      sampleRate = ISensor.defaultSampleTime;
+    }
+  });
 
   parser.parse(args);
 
   /// Announce and start
   print("Welcome to iot-home for device ${Secrets
-          .dummyDeviceId} with a sample rate of $sampleRate seconds");
+      .lightDeviceId} with a sample rate of $sampleRate seconds");
 
   /// Create our sensor and start it
-  final DummySensor sensor = new DummySensor(sampleRate);
+  final LightSensor sensor = new LightSensor(sampleRate);
   sensor.initialise();
   sensor.start();
 
   /// Create our MQTT bridge and initialise it
-  final MqttBridge bridge = new MqttBridge(Secrets.dummyDeviceId);
+  final MqttBridge bridge = new MqttBridge(Secrets.lightDeviceId);
   bridge.logging = mqttLogging;
   bridge.initialise();
 
@@ -48,7 +48,8 @@ Future main(List<String> args) async {
 
   /// Listen for values
   await for (SensorData data in sensor.values) {
-    print("Dummy sensor value is ${data.value} at time ${data.at}");
+    print("${Secrets.lightDeviceId} value is ${data.value} at time ${data
+        .at}");
     // Dont publish unless the bridge is ready
     if (bridge.initialised) {
       bridge.update(data.value);
