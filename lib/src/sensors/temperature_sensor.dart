@@ -60,9 +60,15 @@ class TemperatureSensor extends ISensor {
 
   /// Get the temperature from the board sensor
   void _generateValue() {
-    _script.updateValueSync();
-    final String output = _script.output;
-    value = int.parse(output);
-    at = _script.lastValueTime;
+    try {
+      _script.updateValueSync();
+      final String output = _script.output;
+      value = int.parse(output);
+      at = _script.lastValueTime;
+    } catch (e) {
+      print(Secrets.temperatureDeviceId +
+          " exception raised getting sensor value");
+      print(e);
+    }
   }
 }
