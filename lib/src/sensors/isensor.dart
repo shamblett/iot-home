@@ -17,7 +17,7 @@ enum SensorState { none, started, stopped }
 class SensorData {
   SensorTypes type;
   dynamic value;
-  DateTime at;
+  int at;
 }
 
 /// Interface for all the sensors
@@ -57,7 +57,7 @@ abstract class ISensor {
   SensorData getSensorData() {
     final SensorData message = new SensorData();
     message.value = value;
-    message.at = at;
+    message.at = at.millisecondsSinceEpoch;
     message.type = type;
     return message;
   }
