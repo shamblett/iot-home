@@ -9,6 +9,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:iot_home/iot_home_sensors.dart';
 import 'package:args/args.dart';
+import 'package:intl/intl.dart';
 
 Future main(List<String> args) async {
   bool mqttLogging = false;
@@ -47,9 +48,13 @@ Future main(List<String> args) async {
   stdin.listen((List<int> data) => sensor.stop());
 
   /// Listen for values
+  final DateFormat format = new DateFormat("y-MM-dd-HH:mm:ss");
   await for (SensorData data in sensor.values) {
-    print("${Secrets.temperatureDeviceId} value is ${data.value} at time ${data
-        .at}");
+    final String dateString =
+    format.format(new DateTime.fromMillisecondsSinceEpoch(data.at));
+    print(
+        "${Secrets.temperatureDeviceId} value is ${data
+            .value} at time $dateString");
     // Dont publish unless the bridge is ready
     if (bridge.initialised) {
       bridge.update(data.value);
