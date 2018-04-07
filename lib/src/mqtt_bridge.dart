@@ -66,9 +66,8 @@ class MqttBridge {
   }
 
   /// Update an integer value
-  void update(int value) {
-    final typed.Uint8Buffer buff = new typed.Uint8Buffer(1);
-    buff[0] = value;
+  void update(SensorData data) {
+    final typed.Uint8Buffer buff = _sensorDataBuffer(data);
     client.publishMessage(getTelemetryTopic(), mqtt.MqttQos.atMostOnce, buff);
   }
 
@@ -102,5 +101,13 @@ class MqttBridge {
     new jwt.Jwt.RS256({'iat': iat, 'exp': exp, 'aud': Secrets.projectId});
     final jwt.EncodedJwt enc = await encoder.convert(token);
     return enc.toString();
+  }
+
+  typed.Uint8Buffer _sensorDataBuffer(SensorData data) {
+    return new typed.Uint8Buffer()
+      ..addAll(data
+          .toString()
+          .codeUnits
+          .toList());
   }
 }

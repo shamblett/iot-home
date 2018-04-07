@@ -56,7 +56,7 @@ Future main(List<String> args) async {
         "${Secrets.lightDeviceId} value is ${data.value} at time $dateString");
     // Dont publish unless the bridge is ready
     if (bridge.initialised) {
-      bridge.update(data.value);
+      bridge.update(data);
     } else {
       print("iot-home: not updated bridge not ready");
     }

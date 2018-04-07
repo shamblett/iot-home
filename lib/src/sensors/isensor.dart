@@ -18,6 +18,10 @@ class SensorData {
   SensorTypes type;
   dynamic value;
   int at;
+
+  String toString() {
+    return type.toString() + ":" + value.toString() + ":" + at.toString();
+  }
 }
 
 /// Interface for all the sensors
