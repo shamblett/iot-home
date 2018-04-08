@@ -19,8 +19,13 @@ class SensorData {
   dynamic value;
   int at;
 
+  /// toString, remove the enum type from SensorTypes
   String toString() {
-    return type.toString() + ":" + value.toString() + ":" + at.toString();
+    return type.toString().split(".").toList()[1] +
+        ":" +
+        value.toString() +
+        ":" +
+        at.toString();
   }
 }
 
