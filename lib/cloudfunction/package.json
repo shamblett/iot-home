@@ -1,0 +1,8 @@
+{
+  "name": "sample-pubsub",
+  "version": "0.0.1",
+  "repository": "googleapis/nodejs-bigquery",
+  "dependencies": {
+    "@google-cloud/bigquery": "1.2.0"
+  }
+}
