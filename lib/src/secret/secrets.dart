@@ -9,7 +9,7 @@ part of iot_home_sensors;
 
 /// Project/ Device Id's etc
 class Secrets {
-  static const String projectId = 'warm-actor-356';
+  static const String projectId = 'xxxxx';
   static const String region = 'europe-west1';
   static const String registry = 'home-sensors';
 
