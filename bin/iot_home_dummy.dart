@@ -31,7 +31,8 @@ Future main(List<String> args) async {
   parser.parse(args);
 
   /// Announce and start
-  print("Welcome to iot-home for device ${Secrets
+  print(
+      "Welcome to iot-home for device ${Secrets
           .dummyDeviceId} with a sample rate of $sampleRate seconds");
 
   /// Create our sensor and start it
@@ -50,8 +51,8 @@ Future main(List<String> args) async {
   /// Listen for values
   final DateFormat format = new DateFormat("y-MM-dd-HH:mm:ss");
   await for (SensorData data in sensor.values) {
-    final String dateString = format.format(
-        new DateTime.fromMillisecondsSinceEpoch(data.at));
+    final String dateString =
+    format.format(new DateTime.fromMillisecondsSinceEpoch(data.at));
     print("Dummy sensor value is ${data.value} at time $dateString");
     // Dont publish unless the bridge is ready
     if (bridge.initialised) {

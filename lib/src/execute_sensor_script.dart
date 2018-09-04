@@ -39,8 +39,7 @@ class ExecuteSensorScript {
   /// Asynchronous value update.
   Future<ProcessResult> updateValueAsync() async {
     final Completer completer = new Completer();
-    Process
-        .run(command, arguments, workingDirectory: workingDirectory)
+    Process.run(command, arguments, workingDirectory: workingDirectory)
         .then((ProcessResult res) {
       if (res.exitCode != 0) {
         completer.complete(null);

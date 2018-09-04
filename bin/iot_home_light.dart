@@ -31,8 +31,9 @@ Future main(List<String> args) async {
   parser.parse(args);
 
   /// Announce and start
-  print("Welcome to iot-home for device ${Secrets
-      .lightDeviceId} with a sample rate of $sampleRate seconds");
+  print(
+      "Welcome to iot-home for device ${Secrets
+          .lightDeviceId} with a sample rate of $sampleRate seconds");
 
   /// Create our sensor and start it
   final LightSensor sensor = new LightSensor(sampleRate);

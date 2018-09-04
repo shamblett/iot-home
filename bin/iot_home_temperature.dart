@@ -31,7 +31,8 @@ Future main(List<String> args) async {
   parser.parse(args);
 
   /// Announce and start
-  print("Welcome to iot-home for device ${Secrets
+  print(
+      "Welcome to iot-home for device ${Secrets
           .temperatureDeviceId} with a sample rate of $sampleRate seconds");
 
   /// Create our sensor and start it
