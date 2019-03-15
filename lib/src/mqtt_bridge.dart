@@ -90,10 +90,9 @@ class MqttBridge {
         .millisecondsSinceEpoch) /
         1000)
         .round();
-    final claimSet = new jwt.JwtClaim(
-        audience: <String>[Secrets.projectId],
-        payload: {'iat': iat, 'exp': exp});
-    return jwt.issueJwtHS256(claimSet, pk);
+    final claimSet = jwt.JsonWebTokenClaims.fromJson(
+        {'audience': <String>[Secrets.projectId], 'iat': iat, 'exp': exp});
+    //jwt.JsonWebToken token = jwt.JsonWebToken.
   }
 
   typed.Uint8Buffer _sensorDataBuffer(SensorData data) {
