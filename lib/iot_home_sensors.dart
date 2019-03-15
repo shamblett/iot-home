@@ -11,7 +11,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:io';
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;
-import 'package:jaguar_jwt/jaguar_jwt.dart' as jwt;
+import 'package:jose/jose.dart' as jwt;
 import 'package:path/path.dart' as path;
 import 'package:typed_data/typed_data.dart' as typed;
 
