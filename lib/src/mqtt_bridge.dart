@@ -54,14 +54,16 @@ class MqttBridge {
       client.secure = true;
       final String username = "unused";
       client.setProtocolV311();
-      client.logging(on: true);
+      client.logging(on: logging);
       client.connect(username, password).then((dynamic f) {
         if (client.connectionStatus.state ==
             mqtt.MqttConnectionState.connected) {
+          print("SUCCESS - the MQTT bridge is connected");
+          initialised = true;
+        } else {
           print(
               "ERROR - the MQTT bridge is not connected - try again with logging on");
         }
-        initialised = true;
       });
     });
   }

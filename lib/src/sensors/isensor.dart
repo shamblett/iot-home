@@ -49,7 +49,8 @@ abstract class ISensor {
   int sampleTime;
 
   /// The stream of values emitted by the sensor
-  final StreamController _values = new StreamController.broadcast();
+  final StreamController<SensorData> _values =
+  new StreamController<SensorData>.broadcast();
 
   Stream<SensorData> get values => _values.stream;
 
