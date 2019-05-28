@@ -9,6 +9,9 @@ part of iot_home_sensors;
 
 /// The interface class to Googles's Iot-Core MQTT bridge
 class MqttBridge {
+  /// Construction
+  MqttBridge(this.deviceId);
+
   /// Device Id
   String deviceId;
 
@@ -22,14 +25,17 @@ class MqttBridge {
   /// Logging
   bool logging = false;
 
+  /// Token signers
+  Map<String, jwt.TokenSigner> signers = new Map<String, jwt.TokenSigner>();
+
+  /// JWT encoder
+  jwt.Encoder encoder;
+
   /// Password- encoded and signed JWYT
   String password;
 
   /// Are we initialised
   bool initialised = false;
-
-  /// Construction
-  MqttBridge(this.deviceId);
 
   /// Initialise and connect to the Mqtt bridge
   void initialise() {
@@ -39,7 +45,9 @@ class MqttBridge {
     path.join(path.current, "lib", "src", "secret", sensorPkFilename);
     final File pkFile = new File(pkPath);
     final String pk = pkFile.readAsStringSync();
-    getJWT(pk).then((String enc) {
+    signers['RS256'] = jwt.toTokenSigner(jwt.createRS256Signer(pk));
+    encoder = new jwt.Encoder(jwt.composeTokenSigners(signers));
+    getJWT().then((String enc) {
       password = enc;
       client = new mqtt.MqttClient(server, getClientId());
       client.port = port;
@@ -82,7 +90,7 @@ class MqttBridge {
   }
 
   /// Get the JWT token
-  Future<String> getJWT(String pk) async {
+  Future<String> getJWT() async {
     final int iat =
     ((new DateTime.now().millisecondsSinceEpoch) / 1000).round();
     final int exp = ((new DateTime.now()
@@ -90,9 +98,10 @@ class MqttBridge {
         .millisecondsSinceEpoch) /
         1000)
         .round();
-    final claimSet = jwt.JsonWebTokenClaims.fromJson(
-        {'audience': <String>[Secrets.projectId], 'iat': iat, 'exp': exp});
-    //jwt.JsonWebToken token = jwt.JsonWebToken.
+    final jwt.Jwt token =
+    new jwt.Jwt.RS256({'iat': iat, 'exp': exp, 'aud': Secrets.projectId});
+    final jwt.EncodedJwt enc = await encoder.convert(token);
+    return enc.toString();
   }
 
   typed.Uint8Buffer _sensorDataBuffer(SensorData data) {

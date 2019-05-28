@@ -16,7 +16,6 @@
      - comment_references
      - control_flow_in_finally
      - empty_statements
-     - hash_and_equals
      - invariant_booleans
      - iterable_contains_unrelated_type
      - list_remove_unrelated_type
@@ -48,7 +47,6 @@
      - slash_for_doc_comments
      - sort_constructors_first
      - sort_unnamed_constructors_first
-     - super_goes_last
      - type_annotate_public_apis
      - type_init_formals
 #     - unnecessary_getters_setters
