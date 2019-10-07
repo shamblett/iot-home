@@ -7,7 +7,7 @@
 
 part of iot_home_sensors;
 
-/// A light sensor class, this class generates a stream of integer lux values generated
+/// A light sensor class, this class generates a stream of raw integer values generated
 /// from the beaglebone board light sensor.
 /// A value is generated every sampleTime seconds.
 class LightSensor extends ISensor {
@@ -17,6 +17,10 @@ class LightSensor extends ISensor {
     value = 0;
     state = SensorState.stopped;
     this.sampleTime = sampleTime;
+    // Initialise Mraa
+    _mraa.common.initialise();
+    // The light sensor is on AIO 1 on the beaglebone green
+    _aioContext = _mraa.aio.initialise(1);
   }
 
   /// The value generation period timer and its callback
@@ -28,14 +32,12 @@ class LightSensor extends ISensor {
     _values.add(data);
   }
 
-  /// The script execution object
-  ExecuteSensorScript _script;
+  /// Mraa
+  mraa.Mraa _mraa = mraa.Mraa();
+  ffi.Pointer<mraa.MraaAioContext> _aioContext;
 
   /// Initialiser
   void initialise() {
-    /// Create the script execution object
-    final String command = Secrets.lightScript;
-    _script = new ExecuteSensorScript(command, Secrets.workingDirectory, []);
   }
 
   /// Start sensing
@@ -61,10 +63,8 @@ class LightSensor extends ISensor {
   /// Get the temperature from the board sensor
   void _generateValue() {
     try {
-      _script.updateValueSync();
-      final String output = _script.output;
-      value = int.parse(output);
-      at = _script.lastValueTime;
+      value = _mraa.aio.read(_aioContext);
+      at = DateTime.now();
     } catch (e) {
       print(Secrets.lightDeviceId + " exception raised getting sensor value");
       print(e);

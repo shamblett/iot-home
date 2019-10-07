@@ -8,12 +8,14 @@
 library iot_home_sensors;
 
 import 'dart:async';
+import 'dart:ffi' as ffi;
 import 'dart:math';
 import 'dart:io';
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;
 import 'package:just_jwt/just_jwt.dart' as jwt;
 import 'package:path/path.dart' as path;
 import 'package:typed_data/typed_data.dart' as typed;
+import 'package:mraa/mraa.dart' as mraa;
 
 part 'package:iot_home/src/sensors/isensor.dart';
 

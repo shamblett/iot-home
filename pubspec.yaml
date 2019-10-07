@@ -1,6 +1,6 @@
 name: iot_home
 description: A little iot-core project using MQTT and my beagle bone
-version: 2.0.0
+version: 2.0.1
 author: Steve Hamblett <steve.hamblett@linux.com>
 homepage: https://github.com/shamblett/iot-home
 
@@ -11,6 +11,8 @@ dependencies:
   mqtt_client: '^5.5.3'
   just_jwt:
     git: https://github.com/shamblett/JustJWT.git
+  mraa:
+    git: https://github.com/shamblett/mraa.git
   args: '^1.5.0'
   intl: '^0.15.7'
 

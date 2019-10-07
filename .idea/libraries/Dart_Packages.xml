@@ -233,6 +233,13 @@
             </list>
           </value>
         </entry>
+        <entry key="mraa">
+          <value>
+            <list>
+              <option value="$USER_HOME$/AppData/Roaming/Pub/Cache/git/mraa-02f844b88eaf65de177506a14a1ac8cdd9d71d0c/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="multi_server_socket">
           <value>
             <list>
@@ -468,6 +475,7 @@
     </properties>
     <CLASSES>
       <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/git/JustJWT-af35c9f1b51bfa86eb78fc969d326c86ecf3e9a7/lib" />
+      <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/git/mraa-02f844b88eaf65de177506a14a1ac8cdd9d71d0c/lib" />
       <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/git/pointycastle-47ac82c6d032e4de90b120adfe50e82a38d468bc/lib" />
       <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/git/rsa_pkcs-5a15d70c96a03f462db9041b0cfcfee03a72900b/lib" />
       <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/analyzer-0.35.3/lib" />
