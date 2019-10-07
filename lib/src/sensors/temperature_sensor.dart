@@ -17,6 +17,10 @@ class TemperatureSensor extends ISensor {
     value = 0;
     state = SensorState.stopped;
     this.sampleTime = sampleTime;
+    // Initialise Mraa
+    _mraa.common.initialise();
+    // The light sensor is on AIO 2 on the beaglebone green
+    _aioContext = _mraa.aio.initialise(2);
   }
 
   /// The value generation period timer and its callback
@@ -28,15 +32,12 @@ class TemperatureSensor extends ISensor {
     _values.add(data);
   }
 
-  /// The script execution object
-  ExecuteSensorScript _script;
+  /// Mraa
+  mraa.Mraa _mraa = mraa.Mraa();
+  ffi.Pointer<mraa.MraaAioContext> _aioContext;
 
   /// Initialiser
-  void initialise() {
-    /// Create the script execution object
-    final String command = Secrets.temperatureScript;
-    _script = new ExecuteSensorScript(command, Secrets.workingDirectory, []);
-  }
+  void initialise() {}
 
   /// Start sensing
   void start() {
@@ -61,10 +62,7 @@ class TemperatureSensor extends ISensor {
   /// Get the temperature from the board sensor
   void _generateValue() {
     try {
-      _script.updateValueSync();
-      final String output = _script.output;
-      value = int.parse(output);
-      at = _script.lastValueTime;
+      value = _mraa.aio.read(_aioContext);
     } catch (e) {
       print(Secrets.temperatureDeviceId +
           " exception raised getting sensor value");
