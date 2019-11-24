@@ -18,6 +18,7 @@ class TemperatureSensor extends ISensor {
     state = SensorState.stopped;
     this.sampleTime = sampleTime;
     // Initialise Mraa
+    _mraa.noJsonLoading = true;
     _mraa.initialise();
     _mraa.common.initialise();
     // The temperature sensor is on AIO 2 on the beaglebone green
