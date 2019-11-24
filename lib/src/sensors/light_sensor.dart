@@ -36,7 +36,7 @@ class LightSensor extends ISensor {
   }
 
   /// Mraa
-  mraa.Mraa _mraa = mraa.Mraa();
+  mraa.Mraa _mraa = mraa.Mraa.fromLib('beaglebone/libmraa.so.2.0.0');
   ffi.Pointer<mraa.MraaAioContext> _aioContext;
 
   /// Grove sensors
