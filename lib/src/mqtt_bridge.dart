@@ -42,7 +42,7 @@ class MqttBridge {
     // Initialize the token signers, in our case just RS256
     final String sensorPkFilename = deviceId + "-pk.key";
     final String pkPath =
-    path.join(path.current, "lib", "src", "secret", sensorPkFilename);
+        path.join(path.current, "lib", "src", "secret", sensorPkFilename);
     final File pkFile = new File(pkPath);
     final String pk = pkFile.readAsStringSync();
     signers['RS256'] = jwt.toTokenSigner(jwt.createRS256Signer(pk));
@@ -94,23 +94,19 @@ class MqttBridge {
   /// Get the JWT token
   Future<String> getJWT() async {
     final int iat =
-    ((new DateTime.now().millisecondsSinceEpoch) / 1000).round();
+        ((new DateTime.now().millisecondsSinceEpoch) / 1000).round();
     final int exp = ((new DateTime.now()
-        .add(new Duration(hours: 24))
-        .millisecondsSinceEpoch) /
-        1000)
+                .add(new Duration(hours: 24))
+                .millisecondsSinceEpoch) /
+            1000)
         .round();
     final jwt.Jwt token =
-    new jwt.Jwt.RS256({'iat': iat, 'exp': exp, 'aud': Secrets.projectId});
+        new jwt.Jwt.RS256({'iat': iat, 'exp': exp, 'aud': Secrets.projectId});
     final jwt.EncodedJwt enc = await encoder.convert(token);
     return enc.toString();
   }
 
   typed.Uint8Buffer _sensorDataBuffer(SensorData data) {
-    return new typed.Uint8Buffer()
-      ..addAll(data
-          .toString()
-          .codeUnits
-          .toList());
+    return new typed.Uint8Buffer()..addAll(data.toString().codeUnits.toList());
   }
 }

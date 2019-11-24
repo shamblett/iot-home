@@ -41,7 +41,7 @@ class DummySensor extends ISensor {
   void start() {
     /// Start the periodic timer
     _timer =
-    new Timer.periodic(new Duration(seconds: sampleTime), _timerCallBack);
+        new Timer.periodic(new Duration(seconds: sampleTime), _timerCallBack);
 
     /// Generate an initial value
     _generateValue();

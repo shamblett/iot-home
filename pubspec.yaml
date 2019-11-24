@@ -11,10 +11,10 @@ dependencies:
   mqtt_client: '^5.5.3'
   just_jwt:
     git: https://github.com/shamblett/JustJWT.git
-  mraa:
-    git: https://github.com/shamblett/mraa.git
+  mraa: '^1.1.0'
   args: '^1.5.0'
   intl: '^0.15.7'
+  grove: '^1.0.0'
 
 dev_dependencies:
   test: '^1.3.0'

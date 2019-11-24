@@ -16,6 +16,7 @@ import 'package:just_jwt/just_jwt.dart' as jwt;
 import 'package:path/path.dart' as path;
 import 'package:typed_data/typed_data.dart' as typed;
 import 'package:mraa/mraa.dart' as mraa;
+import 'package:grove/grove.dart' as sensor;
 
 part 'package:iot_home/src/sensors/isensor.dart';
 

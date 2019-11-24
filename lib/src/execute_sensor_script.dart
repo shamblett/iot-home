@@ -31,7 +31,7 @@ class ExecuteSensorScript {
   /// Synchronous value update
   void updateValueSync() {
     final ProcessResult res =
-    Process.runSync(command, arguments, workingDirectory: workingDirectory);
+        Process.runSync(command, arguments, workingDirectory: workingDirectory);
     if (res.exitCode != 0) return;
     _setOutput(res.stdout);
   }

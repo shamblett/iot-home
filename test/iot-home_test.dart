@@ -12,7 +12,7 @@ void main() {
   group("Script Commands", () {
     test("Default constructor", () {
       final ExecuteSensorScript exe =
-      new ExecuteSensorScript("echo", "test", ["hello"]);
+          new ExecuteSensorScript("echo", "test", ["hello"]);
       expect(exe.command, "echo");
       expect(exe.arguments[0], "hello");
       expect(exe.workingDirectory, "test");
@@ -20,7 +20,7 @@ void main() {
 
     test("Execute sync", () {
       final ExecuteSensorScript exe =
-      new ExecuteSensorScript("echo", "test", ["hello"]);
+          new ExecuteSensorScript("echo", "test", ["hello"]);
       expect(exe.command, "echo");
       expect(exe.arguments, ["hello"]);
       expect(exe.workingDirectory, "test");
@@ -31,7 +31,7 @@ void main() {
 
     test("Execute async", () async {
       final ExecuteSensorScript exe =
-      new ExecuteSensorScript("echo", "test", ["hello"]);
+          new ExecuteSensorScript("echo", "test", ["hello"]);
       expect(exe.command, "echo");
       expect(exe.arguments, ["hello"]);
       expect(exe.workingDirectory, "test");

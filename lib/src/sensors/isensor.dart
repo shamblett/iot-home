@@ -50,7 +50,7 @@ abstract class ISensor {
 
   /// The stream of values emitted by the sensor
   final StreamController<SensorData> _values =
-  new StreamController<SensorData>.broadcast();
+      new StreamController<SensorData>.broadcast();
 
   Stream<SensorData> get values => _values.stream;
 

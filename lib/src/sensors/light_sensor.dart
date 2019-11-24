@@ -18,9 +18,11 @@ class LightSensor extends ISensor {
     state = SensorState.stopped;
     this.sampleTime = sampleTime;
     // Initialise Mraa
+    _mraa.initialise();
     _mraa.common.initialise();
     // The light sensor is on AIO 1 on the beaglebone green
     _aioContext = _mraa.aio.initialise(1);
+    _lightSensor = sensor.GroveLight(_mraa, _aioContext);
   }
 
   /// The value generation period timer and its callback
@@ -36,9 +38,11 @@ class LightSensor extends ISensor {
   mraa.Mraa _mraa = mraa.Mraa();
   ffi.Pointer<mraa.MraaAioContext> _aioContext;
 
+  /// Grove sensors
+  sensor.GroveLight _lightSensor;
+
   /// Initialiser
-  void initialise() {
-  }
+  void initialise() {}
 
   /// Start sensing
   void start() {
@@ -63,7 +67,8 @@ class LightSensor extends ISensor {
   /// Get the temperature from the board sensor
   void _generateValue() {
     try {
-      value = _mraa.aio.read(_aioContext);
+      final sensor.GroveLightValues values = _lightSensor.getValues();
+      value = values.lux;
       at = DateTime.now();
     } catch (e) {
       print(Secrets.lightDeviceId + " exception raised getting sensor value");
