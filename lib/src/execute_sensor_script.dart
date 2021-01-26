@@ -30,7 +30,7 @@ class ExecuteSensorScript {
 
   /// Synchronous value update
   void updateValueSync() {
-    final ProcessResult res =
+    final res =
         Process.runSync(command, arguments, workingDirectory: workingDirectory);
     if (res.exitCode != 0) return;
     _setOutput(res.stdout);
@@ -38,8 +38,8 @@ class ExecuteSensorScript {
 
   /// Asynchronous value update.
   Future<ProcessResult> updateValueAsync() async {
-    final Completer<ProcessResult> completer = new Completer<ProcessResult>();
-    Process.run(command, arguments, workingDirectory: workingDirectory)
+    final completer = Completer<ProcessResult>();
+    await Process.run(command, arguments, workingDirectory: workingDirectory)
         .then((ProcessResult res) {
       if (res.exitCode != 0) {
         completer.complete(null);
@@ -54,6 +54,6 @@ class ExecuteSensorScript {
   /// Output setter
   void _setOutput(String value) {
     _output = value;
-    _lastValueTime = new DateTime.now();
+    _lastValueTime = DateTime.now();
   }
 }

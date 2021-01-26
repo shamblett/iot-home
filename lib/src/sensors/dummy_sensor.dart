@@ -17,7 +17,7 @@ class DummySensor extends ISensor {
     value = 0;
     state = SensorState.stopped;
     this.sampleTime = sampleTime;
-    _random = new Random();
+    _random = Random();
   }
 
   /// The value generation period timer and its callback
@@ -25,7 +25,7 @@ class DummySensor extends ISensor {
 
   void _timerCallBack(Timer timer) {
     _generateValue();
-    final SensorData data = getSensorData();
+    final data = getSensorData();
     _values.add(data);
   }
 
@@ -33,24 +33,26 @@ class DummySensor extends ISensor {
   Random _random;
 
   /// Initialiser
+  @override
   void initialise() {
     /// Nothing to do here
   }
 
   /// Start sensing
+  @override
   void start() {
     /// Start the periodic timer
-    _timer =
-        new Timer.periodic(new Duration(seconds: sampleTime), _timerCallBack);
+    _timer = Timer.periodic(Duration(seconds: sampleTime), _timerCallBack);
 
     /// Generate an initial value
     _generateValue();
-    final SensorData data = getSensorData();
+    final data = getSensorData();
     _values.add(data);
     state = SensorState.started;
   }
 
   /// Stop sensing
+  @override
   void stop() {
     _timer.cancel();
     state = SensorState.stopped;
@@ -61,6 +63,6 @@ class DummySensor extends ISensor {
   void _generateValue() {
     value = _random.nextInt(40);
     value = value + 0x40;
-    at = new DateTime.now();
+    at = DateTime.now();
   }
 }

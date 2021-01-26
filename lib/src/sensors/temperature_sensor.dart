@@ -23,7 +23,7 @@ class TemperatureSensor extends ISensor {
     _mraa.common.initialise();
     // The temperature sensor is on AIO 2 on the beaglebone green
     _aioContext = _mraa.aio.initialise(2);
-    _temperatureSensor = sensor.GroveTemperature(_mraa, _aioContext);
+    _temperatureSensor = sensor.GroveTemperatureV12(_mraa, _aioContext);
   }
 
   /// The value generation period timer and its callback
@@ -31,34 +31,36 @@ class TemperatureSensor extends ISensor {
 
   void _timerCallBack(Timer timer) {
     _generateValue();
-    final SensorData data = getSensorData();
+    final data = getSensorData();
     _values.add(data);
   }
 
   /// Mraa
-  mraa.Mraa _mraa =mraa.Mraa.fromLib('beaglebone/libmraa.so.2.0.0');
+  final mraa.Mraa _mraa = mraa.Mraa.fromLib('beaglebone/libmraa.so.2.0.0');
   ffi.Pointer<mraa.MraaAioContext> _aioContext;
 
   /// Grove sensors
-  sensor.GroveTemperature _temperatureSensor;
+  sensor.GroveTemperatureV12 _temperatureSensor;
 
   /// Initialiser
+  @override
   void initialise() {}
 
   /// Start sensing
+  @override
   void start() {
     /// Start the periodic timer
-    _timer =
-        new Timer.periodic(new Duration(seconds: sampleTime), _timerCallBack);
+    _timer = Timer.periodic(Duration(seconds: sampleTime), _timerCallBack);
 
     /// Generate an initial value
     _generateValue();
-    final SensorData data = getSensorData();
+    final data = getSensorData();
     _values.add(data);
     state = SensorState.started;
   }
 
   /// Stop sensing
+  @override
   void stop() {
     _timer.cancel();
     state = SensorState.stopped;
@@ -68,12 +70,11 @@ class TemperatureSensor extends ISensor {
   /// Get the temperature from the board sensor
   void _generateValue() {
     try {
-      final sensor.GroveTemperatureValues values =
-          _temperatureSensor.getValues();
+      final values = _temperatureSensor.values;
       value = values.celsius;
     } catch (e) {
       print(Secrets.temperatureDeviceId +
-          " exception raised getting sensor value");
+          ' exception raised getting sensor value');
       print(e);
     }
   }

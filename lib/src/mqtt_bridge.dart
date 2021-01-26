@@ -15,8 +15,8 @@ class MqttBridge {
   /// Device Id
   String deviceId;
 
-  /// The MQTT client
-  mqtt.MqttClient client;
+  /// The MQTT server client
+  mqtt.MqttServerClient client;
 
   /// The Iot-Core server and port, we use 443
   final String server = 'mqtt.googleapis.com';
@@ -26,7 +26,7 @@ class MqttBridge {
   bool logging = false;
 
   /// Token signers
-  Map<String, jwt.TokenSigner> signers = new Map<String, jwt.TokenSigner>();
+  Map<String, jwt.TokenSigner> signers = <String, jwt.TokenSigner>{};
 
   /// JWT encoder
   jwt.Encoder encoder;
@@ -40,29 +40,28 @@ class MqttBridge {
   /// Initialise and connect to the Mqtt bridge
   void initialise() {
     // Initialize the token signers, in our case just RS256
-    final String sensorPkFilename = deviceId + "-pk.key";
-    final String pkPath =
-        path.join(path.current, "lib", "src", "secret", sensorPkFilename);
-    final File pkFile = new File(pkPath);
-    final String pk = pkFile.readAsStringSync();
+    final sensorPkFilename = deviceId + '-pk.key';
+    final pkPath =
+        path.join(path.current, 'lib', 'src', 'secret', sensorPkFilename);
+    final pkFile = File(pkPath);
+    final pk = pkFile.readAsStringSync();
     signers['RS256'] = jwt.toTokenSigner(jwt.createRS256Signer(pk));
-    encoder = new jwt.Encoder(jwt.composeTokenSigners(signers));
+    encoder = jwt.Encoder(jwt.composeTokenSigners(signers));
     getJWT().then((String enc) {
       password = enc;
-      client = new mqtt.MqttClient(server, getClientId());
+      client = mqtt.MqttServerClient(server, getClientId());
       client.port = port;
       client.secure = true;
-      final String username = "unused";
+      final username = 'unused';
       client.setProtocolV311();
       client.logging(on: logging);
       client.connect(username, password).then((dynamic f) {
-        if (client.connectionStatus.state ==
-            mqtt.MqttConnectionState.connected) {
-          print("SUCCESS - the MQTT bridge is connected");
+        if (client.connectionStatus.state == MqttConnectionState.connected) {
+          print('SUCCESS - the MQTT bridge is connected');
           initialised = true;
         } else {
           print(
-              "ERROR - the MQTT bridge is not connected - try again with logging on");
+              'ERROR - the MQTT bridge is not connected - try again with logging on');
         }
       });
     });
@@ -70,43 +69,41 @@ class MqttBridge {
 
   /// Update an integer value
   void update(SensorData data) {
-    final typed.Uint8Buffer buff = _sensorDataBuffer(data);
-    client.publishMessage(getTelemetryTopic(), mqtt.MqttQos.atMostOnce, buff);
+    final buff = _sensorDataBuffer(data);
+    client.publishMessage(getTelemetryTopic(), MqttQos.atMostOnce, buff);
   }
 
   /// Get the client id for the sensor
   String getClientId() {
-    return "projects/" +
+    return 'projects/' +
         Secrets.projectId +
-        "/locations/" +
+        '/locations/' +
         Secrets.region +
-        "/registries/" +
+        '/registries/' +
         Secrets.registry +
-        "/devices/" +
+        '/devices/' +
         deviceId;
   }
 
   /// Get the telemetry topic
   String getTelemetryTopic() {
-    return "/devices/" + deviceId + "/events";
+    return '/devices/' + deviceId + '/events';
   }
 
   /// Get the JWT token
   Future<String> getJWT() async {
-    final int iat =
-        ((new DateTime.now().millisecondsSinceEpoch) / 1000).round();
-    final int exp = ((new DateTime.now()
-                .add(new Duration(hours: 24))
-                .millisecondsSinceEpoch) /
-            1000)
-        .round();
-    final jwt.Jwt token =
-        new jwt.Jwt.RS256({'iat': iat, 'exp': exp, 'aud': Secrets.projectId});
-    final jwt.EncodedJwt enc = await encoder.convert(token);
+    final iat = ((DateTime.now().millisecondsSinceEpoch) / 1000).round();
+    final exp =
+        ((DateTime.now().add(Duration(hours: 24)).millisecondsSinceEpoch) /
+                1000)
+            .round();
+    final token =
+        jwt.Jwt.RS256({'iat': iat, 'exp': exp, 'aud': Secrets.projectId});
+    final enc = await encoder.convert(token);
     return enc.toString();
   }
 
   typed.Uint8Buffer _sensorDataBuffer(SensorData data) {
-    return new typed.Uint8Buffer()..addAll(data.toString().codeUnits.toList());
+    return typed.Uint8Buffer()..addAll(data.toString().codeUnits.toList());
   }
 }

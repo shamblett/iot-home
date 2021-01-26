@@ -20,11 +20,12 @@ class SensorData {
   int at;
 
   /// toString, remove the enum type from SensorTypes
+  @override
   String toString() {
-    return type.toString().split(".").toList()[1] +
-        ":" +
+    return type.toString().split('.').toList()[1] +
+        ':' +
         value.toString() +
-        ":" +
+        ':' +
         at.toString();
   }
 }
@@ -50,7 +51,7 @@ abstract class ISensor {
 
   /// The stream of values emitted by the sensor
   final StreamController<SensorData> _values =
-      new StreamController<SensorData>.broadcast();
+      StreamController<SensorData>.broadcast();
 
   Stream<SensorData> get values => _values.stream;
 
@@ -65,7 +66,7 @@ abstract class ISensor {
 
   /// Get the latest sensor data as a message
   SensorData getSensorData() {
-    final SensorData message = new SensorData();
+    final message = SensorData();
     message.value = value;
     message.at = at.millisecondsSinceEpoch;
     message.type = type;
