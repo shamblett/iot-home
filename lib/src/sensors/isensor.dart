@@ -15,9 +15,9 @@ enum SensorState { none, started, stopped }
 
 /// Sensor data packet
 class SensorData {
-  SensorTypes type;
+  SensorTypes? type;
   dynamic value;
-  int at;
+  late int at;
 
   /// toString, remove the enum type from SensorTypes
   @override
@@ -44,10 +44,10 @@ abstract class ISensor {
   dynamic value;
 
   /// The time the value was set(acquired)
-  DateTime at;
+  late DateTime at;
 
   /// Time between sensor samples in seconds.
-  int sampleTime;
+  late int sampleTime;
 
   /// The stream of values emitted by the sensor
   final StreamController<SensorData> _values =

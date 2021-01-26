@@ -20,13 +20,13 @@ class ExecuteSensorScript {
   String workingDirectory;
 
   /// The output of the script
-  String _output;
+  String? _output;
 
-  String get output => _output;
+  String? get output => _output;
 
-  DateTime _lastValueTime;
+  DateTime? _lastValueTime;
 
-  DateTime get lastValueTime => _lastValueTime;
+  DateTime? get lastValueTime => _lastValueTime;
 
   /// Synchronous value update
   void updateValueSync() {
@@ -52,7 +52,7 @@ class ExecuteSensorScript {
   }
 
   /// Output setter
-  void _setOutput(String value) {
+  void _setOutput(String? value) {
     _output = value;
     _lastValueTime = DateTime.now();
   }

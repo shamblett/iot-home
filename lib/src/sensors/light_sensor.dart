@@ -27,7 +27,7 @@ class LightSensor extends ISensor {
   }
 
   /// The value generation period timer and its callback
-  Timer _timer;
+  late Timer _timer;
 
   void _timerCallBack(Timer timer) {
     _generateValue();
@@ -37,10 +37,10 @@ class LightSensor extends ISensor {
 
   /// Mraa
   final mraa.Mraa _mraa = mraa.Mraa.fromLib('beaglebone/libmraa.so.2.0.0');
-  ffi.Pointer<mraa.MraaAioContext> _aioContext;
+  late ffi.Pointer<mraa.MraaAioContext> _aioContext;
 
   /// Grove sensors
-  sensor.GroveLightLM358 _lightSensor;
+  late sensor.GroveLightLM358 _lightSensor;
 
   /// Initialiser
   @override

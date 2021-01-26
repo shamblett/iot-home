@@ -16,7 +16,7 @@ class MqttBridge {
   String deviceId;
 
   /// The MQTT server client
-  mqtt.MqttServerClient client;
+  late mqtt.MqttServerClient client;
 
   /// The Iot-Core server and port, we use 443
   final String server = 'mqtt.googleapis.com';
@@ -29,10 +29,10 @@ class MqttBridge {
   Map<String, jwt.TokenSigner> signers = <String, jwt.TokenSigner>{};
 
   /// JWT encoder
-  jwt.Encoder encoder;
+  late jwt.Encoder encoder;
 
   /// Password- encoded and signed JWYT
-  String password;
+  late String password;
 
   /// Are we initialised
   bool initialised = false;

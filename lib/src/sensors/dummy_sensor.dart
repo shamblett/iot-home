@@ -21,7 +21,7 @@ class DummySensor extends ISensor {
   }
 
   /// The value generation period timer and its callback
-  Timer _timer;
+  late Timer _timer;
 
   void _timerCallBack(Timer timer) {
     _generateValue();
@@ -30,7 +30,7 @@ class DummySensor extends ISensor {
   }
 
   /// The random number generator
-  Random _random;
+  late Random _random;
 
   /// Initialiser
   @override

@@ -5,7 +5,7 @@ author: Steve Hamblett <steve.hamblett@linux.com>
 homepage: https://github.com/shamblett/iot-home
 
 environment:
-  sdk: ">=2.6.0  <3.0.0"
+  sdk: '>=2.12.0-29.10.beta <3.0.0'
 
 dependencies:
   mqtt_client: '^8.1.0'
