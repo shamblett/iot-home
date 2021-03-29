@@ -56,7 +56,7 @@ class MqttBridge {
       client.setProtocolV311();
       client.logging(on: logging);
       client.connect(username, password).then((dynamic f) {
-        if (client.connectionStatus.state == MqttConnectionState.connected) {
+        if (client.connectionStatus!.state == MqttConnectionState.connected) {
           print('SUCCESS - the MQTT bridge is connected');
           initialised = true;
         } else {
