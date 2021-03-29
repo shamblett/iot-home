@@ -22,7 +22,7 @@ Future main(List<String> args) async {
   parser.addOption('sampleRate',
       abbr: 's', defaultsTo: ISensor.defaultSampleTime.toString(),
       callback: (sampleRateOption) {
-    sampleRate = int.parse(sampleRateOption);
+    sampleRate = int.parse(sampleRateOption!);
     if (sampleRate <= 0) {
       sampleRate = ISensor.defaultSampleTime;
     }
