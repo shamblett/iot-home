@@ -42,7 +42,7 @@ class ExecuteSensorScript {
     await Process.run(command, arguments, workingDirectory: workingDirectory)
         .then((ProcessResult res) {
       if (res.exitCode != 0) {
-        completer.complete(null);
+        completer.complete(res);
       } else {
         _setOutput(res.stdout);
         completer.complete(res);

@@ -74,7 +74,7 @@ class LightSensor extends ISensor {
       value = values.lux;
       at = DateTime.now();
     } catch (e) {
-      print(Secrets.lightDeviceId + ' exception raised getting sensor value');
+      print('${Secrets.lightDeviceId} exception raised getting sensor value');
       print(e);
     }
   }

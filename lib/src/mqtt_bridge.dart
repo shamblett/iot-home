@@ -40,7 +40,7 @@ class MqttBridge {
   /// Initialise and connect to the Mqtt bridge
   void initialise() {
     // Initialize the token signers, in our case just RS256
-    final sensorPkFilename = deviceId + '-pk.key';
+    final sensorPkFilename = '$deviceId-pk.key';
     final pkPath =
         path.join(path.current, 'lib', 'src', 'secret', sensorPkFilename);
     final pkFile = File(pkPath);
@@ -75,19 +75,13 @@ class MqttBridge {
 
   /// Get the client id for the sensor
   String getClientId() {
-    return 'projects/' +
-        Secrets.projectId +
-        '/locations/' +
-        Secrets.region +
-        '/registries/' +
-        Secrets.registry +
-        '/devices/' +
-        deviceId;
+    return 'projects/${Secrets.projectId}/locations/${Secrets.region}'
+        '/registries/${Secrets.registry}/devices/$deviceId';
   }
 
   /// Get the telemetry topic
   String getTelemetryTopic() {
-    return '/devices/' + deviceId + '/events';
+    return '/devices/$deviceId/events';
   }
 
   /// Get the JWT token

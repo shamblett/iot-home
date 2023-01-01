@@ -19,6 +19,6 @@ class Secrets {
 
   static const String workingDirectory =
       '/home/debian/Development/scripts/analogue/';
-  static const String temperatureScript = workingDirectory + 'temperature.sh';
-  static const String lightScript = workingDirectory + 'light.sh';
+  static const String temperatureScript = '${workingDirectory}temperature.sh';
+  static const String lightScript = '${workingDirectory}light.sh';
 }

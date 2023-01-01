@@ -73,8 +73,8 @@ class TemperatureSensor extends ISensor {
       final values = _temperatureSensor.values;
       value = values.celsius;
     } catch (e) {
-      print(Secrets.temperatureDeviceId +
-          ' exception raised getting sensor value');
+      print(
+          '${Secrets.temperatureDeviceId} exception raised getting sensor value');
       print(e);
     }
   }

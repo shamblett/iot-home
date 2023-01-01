@@ -22,11 +22,7 @@ class SensorData {
   /// toString, remove the enum type from SensorTypes
   @override
   String toString() {
-    return type.toString().split('.').toList()[1] +
-        ':' +
-        value.toString() +
-        ':' +
-        at.toString();
+    return '${type.toString().split('.').toList()[1]}:$value:$at';
   }
 }
 
